@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_service_team_form" model="ir.ui.view">
+            <field name="name">service.team.form</field>
+            <field name="model">service.team</field>
+            <field name="arch" type="xml">
+                <form string="Service Team">
+                    <field name="company_id" invisible="1"/>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="team_leader_id" options="{'no_create': True}" required="1"/>
+                                <field name="team_member_ids" options="{'no_create': True}" required="1" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_service_team_tree" model="ir.ui.view">
+            <field name="name">service.team.tree</field>
+            <field name="model">service.team</field>
+            <field name="arch" type="xml">
+                <tree string="Service Team">
+                    <field name="name"/>
+                    <field name="team_leader_id"/>
+                    <field name="team_member_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_service_team_filter" model="ir.ui.view">
+            <field name="name">service.team.search</field>
+            <field name="model">service.team</field>
+            <field name="arch" type="xml">
+                <search string="Search Service Teams">
+                    <field name="name" string="Service Team"/>
+                    <field name="team_leader_id" string="Team Leader"/>
+                    <group expand="0" string="Group By">
+                        <filter name="team_leader" string="Team Leader" domain="[]" context="{'group_by':'team_leader_id'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+
+        <record id="service_team_tree_action" model="ir.actions.act_window">
+            <field name="name">Service Team</field>
+            <field name="res_model">service.team</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_service_team_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Service Team
+                </p><p>
+                    Odoo's service team structure is used to manage all documents
+                    related to users by service teams.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

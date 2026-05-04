@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_work_order_form" model="ir.ui.view">
+            <field name="name">work.order.form</field>
+            <field name="model">work.order</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+                        <button name="action_start_work" string="Start Work" type="object" states="pending" class="btn-primary"/>
+                        <button name="action_end_work" string="End Work" type="object" states="in_progress" class="btn-primary"/>
+                        <button name="action_cancel" states="pending,in_progress,done" type="object" string="Cancel"/>
+                        <button name="action_reset" states="in_progress" type="object" string="Reset"/>
+                        <field name="state" widget="statusbar" statusbar_visible="pending,in_progress,done,cancel"/>
+                    </header>
+                    <field name="company_id" invisible="1"/>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="wo_number" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="team_id"/>
+                                <field name="team_leader_id" options="{'no_create': True}" required="1"/>
+                                <field name="team_member_ids" options="{'no_create': True}" required="1" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="planned_start"/>
+                                <field name="planned_end"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="origin"/>
+                                <field name="notes" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_work_order_tree" model="ir.ui.view">
+            <field name="name">work.order.tree</field>
+            <field name="model">work.order</field>
+            <field name="arch" type="xml">
+                <tree string="Work Order" decoration-muted="state=='cancel'">
+                    <field name="wo_number"/>
+                    <field name="team_id"/>
+                    <field name="team_leader_id"/>
+                    <field name="team_member_ids"/>
+                    <field name="planned_start"/>
+                    <field name="planned_end"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="origin"/>
+                    <field name="notes"/>
+                    <field name="state"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_work_order_kanban">
+            <field name="name">work.order.kanban</field>
+            <field name="model">work.order</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="wo_number"/>
+                    <field name="team_id"/>
+                    <field name="team_leader_id"/>
+                    <field name="team_member_ids"/>
+                    <field name="planned_start"/>
+                    <field name="planned_end"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="origin"/>
+                    <field name="notes"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.wo_number.value"/></span></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.team_id.value"/></span>
+                                        <span><t t-esc="record.date_start.value"/> <t t-esc="record.date_end.value"/></span>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="pull-right text-right">
+                                            <field name="state" widget="kanban_label_selection" options="{'classes': {'pending': 'default', 'cancel': 'default',
+                                            'done': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_work_order_filter" model="ir.ui.view">
+            <field name="name">work.order.search</field>
+            <field name="model">work.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Work Order">
+                    <field name="wo_number" string="Work Order"/>
+                    <field name="team_id" string="Service Team"/>
+                    <field name="team_leader_id" string="Team Leader"/>
+                    <separator/>
+                    <filter string="Done" name="done" domain="[('state','=','done')]" />
+                    <group expand="0" string="Group By">
+                        <filter string="Service Team" domain="[]" context="{'group_by':'team_id'}"/>
+                        <filter name="team_leader" string="Team Leader" domain="[]" context="{'group_by':'team_leader_id'}"/>
+                        <filter name="status" string="Status" context="{'group_by':'state'}"/>
+                        <filter string="Work Start Month" domain="[]" context="{'group_by':'date_start'}"/>
+                        <filter string="Work End Month" domain="[]" context="{'group_by':'date_end'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+
+        <record id="work_order_tree_action" model="ir.actions.act_window">
+            <field name="name">Work Order</field>
+            <field name="res_model">work.order</field>
+            <field name="view_mode">tree,form,kanban,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="view_work_order_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Work Order
+                </p><p>
+                    Odoo's work order structure is used to manage all documents related to work orders.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

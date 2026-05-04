@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="report_work_order"
+            string="Work Order"
+            model="work.order" 
+            report_type="qweb-pdf"
+            file="booking_order_adita_putri_puspaningrum_16012024.report_workorder" 
+            name="booking_order_adita_putri_puspaningrum_16012024.report_workorder" 
+        />
+    </data>
+</odoo>

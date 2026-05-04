@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_service_team_manager,service_team.manager,model_service_team,base.group_system,1,1,1,1
+access_service_team_user,service_team.user,model_service_team,base.group_user,1,0,0,0
+access_work_order_manager,work_order.manager,model_work_order,base.group_system,1,1,1,1
+access_work_order_user,work_order.user,model_work_order,base.group_user,1,1,1,0

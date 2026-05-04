@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_workorder_document">
+        <t t-call="report.external_layout">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.team_leader_id.lang})" />
+            <div class="page">
+                <div class="oe_structure"/>
+                <table class="table table-condensed" style="border: 1px solid black; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black;" colspan="4"><span t-field="doc.wo_number"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid black;">Team Name</td>
+                            <td style="border: 1px solid black;"><span t-field="doc.team_id.name"/></td>
+                            <td style="border: 1px solid black;">Customer</td>
+                            <td style="border: 1px solid black;"><span t-field="doc.booking_order_id.partner_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">Booking Order Ref</td>
+                            <td style="border: 1px solid black;"><span t-field="doc.booking_order_id.name"/></td>
+                            <td style="border: 1px solid black;">Date</td>
+                            <td style="border: 1px solid black;"><span t-field="doc.date_start"/> - <span t-field="doc.date_end"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="border-bottom: 1px solid transparent;">NOTES:</td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom: 1px solid black;" colspan="4" rowspan="3"><span t-field="doc.notes"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td style="border: 1px solid black;" colspan="4" rowspan="3">Signature:</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="report_workorder">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="booking_order_adita_putri_puspaningrum_16012024.report_workorder_document" t-lang="doc.team_leader_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>
