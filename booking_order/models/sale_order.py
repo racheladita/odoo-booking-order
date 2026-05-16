@@ -69,11 +69,11 @@ class SaleOrder(models.Model):
     @api.multi
     def action_view_work_order(self):
         wos = self.env['work.order'].search([('booking_order_id', '=', self.id)])
-        action = self.env.ref('booking_order_adita_putri_puspaningrum_16012024.work_order_tree_action').read()[0]
+        action = self.env.ref('booking_order.work_order_tree_action').read()[0]
         if len(wos) > 1:
             action['domain'] = [('id', 'in', wos.ids)]
         elif len(wos) == 1:
-            action['views'] = [(self.env.ref('booking_order_adita_putri_puspaningrum_16012024.view_work_order_form').id, 'form')]
+            action['views'] = [(self.env.ref('booking_order.view_work_order_form').id, 'form')]
             action['res_id'] = wos.ids[0]
         else:
             action = {'type': 'ir.actions.act_window_close'}

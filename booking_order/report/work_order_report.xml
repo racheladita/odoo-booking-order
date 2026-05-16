@@ -6,8 +6,8 @@
             string="Work Order"
             model="work.order" 
             report_type="qweb-pdf"
-            file="booking_order_adita_putri_puspaningrum_16012024.report_workorder" 
-            name="booking_order_adita_putri_puspaningrum_16012024.report_workorder" 
+            file="booking_order.report_workorder" 
+            name="booking_order.report_workorder" 
         />
     </data>
 </odoo>

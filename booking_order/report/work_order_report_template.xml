@@ -47,7 +47,7 @@
     <template id="report_workorder">
         <t t-call="report.html_container">
             <t t-foreach="docs" t-as="doc">
-                <t t-call="booking_order_adita_putri_puspaningrum_16012024.report_workorder_document" t-lang="doc.team_leader_id.lang"/>
+                <t t-call="booking_order.report_workorder_document" t-lang="doc.team_leader_id.lang"/>
             </t>
         </t>
     </template>

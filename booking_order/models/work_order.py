@@ -66,7 +66,7 @@ class WorkOrder(models.Model):
     
     @api.multi
     def action_cancel(self):
-        view = self.env.ref('booking_order_adita_putri_puspaningrum_16012024.view_work_order_cancel_confirmation')
+        view = self.env.ref('booking_order.view_work_order_cancel_confirmation')
         wiz = self.env['work.order.cancel.confirmation'].create({'work_order_id': self.id})
         return {
             'name': _('Reason for Cancellation'),
